@@ -6,6 +6,7 @@ import Profile from "./Profile";
 import ConseguirRam from "./ConseguirRam";
 import EnvioRamCompleto from "./EnvioRamCompleto";
 import IniciarEnvioRam from "./IniciarEnvioRam";
+import Layout from './Layout';
 
 export {
   Table,
@@ -16,4 +17,5 @@ export {
   ConseguirRam,
   EnvioRamCompleto,
   IniciarEnvioRam,
+  Layout,
 };

@@ -57,6 +57,28 @@ const IniciarProceso = () => {
             crearRam={crearRam}
             setCreateRamModel={setCreateRamModel}
         />
+        
+        <EnvioRamCompleto
+            completeModal={completeModal}
+            setCompleteModal={setCompleteModal}
+            envioRamCompleto={envioRamCompleto}
+        />
+        <ConseguirRam
+            getModel={getModel}
+            setGetModel={setGetModel}
+            conseguirRam={conseguirRam}
+        />
+        <IniciarEnvioRam
+            startModal={startModal}
+            setStartModal={setStartModal}
+            iniciarEnvioRam={iniciarEnvioRam}
+        />
+        <Profile
+        openProfile={openProfile}
+        setOpenProfile={setOpenProfile}
+        currentUser={currentUser}
+        conseguirRamContador={conseguirRamContador}
+      />
     </Layout>
     );
 }

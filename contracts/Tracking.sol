@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.8.9;
+pragma solidity ^0.8.0;
 
 contract Tracking {
     enum RamStatus { ENSAMBLADO, EN_TRANSITO, ENTREGADO}
@@ -40,6 +40,8 @@ contract Tracking {
         ramContador = 0;
     }
 
+    
+    
     function crearRam(address _receiver, uint256 _fecha, uint256 _almacenamiento, uint256 _precio) public payable {
         require(msg.value == _precio, "El monto del pago debe coincidir con el precio.");
         
@@ -110,7 +112,8 @@ contract Tracking {
         return rams[_sender].length;
     }
 
-    function conseguirTodasTransacciones() public view returns (TypeRam[] memory) {
+    function getAllTransaccions() public view returns (TypeRam[] memory) {
         return typeRams;
     }
+    
 }

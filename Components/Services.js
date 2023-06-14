@@ -28,23 +28,23 @@ const Services = ({
         <div className="flex justify-center items-center h-screen">
           <p className="mr-3 text-white">2</p>
           <button className="text-white">
-            Iniciar y probar RAM
+            Iniciar envio de RAM
           </button>
         </div>
       </div>
-      <div className="hover:cursor-pointer h-32 flex flex-col bg-gray-800 drop-shadow hover:drop-shadow-lg hover:opacity-70">
+      {/* <div className="hover:cursor-pointer h-32 flex flex-col bg-gray-800 drop-shadow hover:drop-shadow-lg hover:opacity-70">
         <div className="flex justify-center items-center h-screen">
           <p className="mr-3 text-white">3</p>
           <button className="text-white">
             Enviar RAM
           </button>
         </div>
-      </div>
+      </div> */}
       <div 
       onClick={()=>setCompleteModal(true)}
       className="hover:cursor-pointer h-32 flex flex-col bg-gray-800 drop-shadow hover:drop-shadow-lg hover:opacity-70">
         <div className="flex justify-center items-center h-screen">
-          <p className="mr-3 text-white">4</p>
+          <p className="mr-3 text-white">3</p>
           <button className="text-white">
             Envio Completado
           </button>

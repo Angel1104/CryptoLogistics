@@ -3,7 +3,7 @@ import Web3Modal from "web3modal";
 import { ethers } from "ethers";
 
 //INTERNAL IMPORT
-import tracking from './Tracking.json';
+import tracking from "../Conetxt/Tracking.json";
 const ContractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
 const ContractABI = tracking.abi;
 
@@ -37,9 +37,11 @@ const crearRam = async (items) => {
           value: ethers.utils.parseUnits(precio, 18),
         }
       );
+      console.log("se creo todo normal")
       await createItem.wait();
       console.log(createItem);
       location.reload();
+      
     } catch (error) {
       console.log("Algo anda mal", error);
     }
@@ -50,7 +52,10 @@ const conseguirTodosRam = async () => {
       const provider = new ethers.providers.JsonRpcProvider();
       const contract = fetchContract(provider);
 
-      const rams = await contract.conseguirTodasTransacciones();
+      console.log("aca");
+      const rams = await contract.getAllTransaccions();
+      console.log("aca");
+
       const todasRams = rams.map((ram) => ({
         sender: ram.sender,
         receiver: ram.receiver,
@@ -61,8 +66,9 @@ const conseguirTodosRam = async () => {
         pagado: ram.pagado,
         estado: ram.estado,
       }));
-
+      
       return todasRams;
+      
     } catch (error) {
       console.log("error, consuguiendo las ram");
     }
@@ -121,16 +127,18 @@ const envioRamCompleto = async (envioRamCompleto) => {
 const conseguirRam = async (index) => {
     console.log(index * 1);
     try {
+      console.log("aca")
       if (!window.ethereum) return "Install MetaMask";
 
       const accounts = await window.ethereum.request({
         method: "eth_accounts",
       });
-
       const provider = new ethers.providers.JsonRpcProvider();
       const contract = fetchContract(provider);
+      console.log(contract)
       const ram = await contract.conseguirRam(accounts[0], index * 1);
-
+      
+      console.log("aca2")
       const SoloRam = {
         sender: ram[0],
         receiver: ram[1],
@@ -141,7 +149,7 @@ const conseguirRam = async (index) => {
         estado: ram[6],
         pagado: ram[7],
       };
-
+      
       return SoloRam;
     } catch (error) {
       console.log("no hay ram");

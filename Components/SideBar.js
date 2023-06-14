@@ -5,14 +5,35 @@ import Head from 'next/head';
 import {useRouter} from 'next/router';
 import Link from 'next/link';
 
-const SideBar = (setOpenProfile) => {
+import {
+  Table,
+  Form,
+  Services,
+  Profile,
+  EnvioRamCompleto,
+  ConseguirRam,
+  IniciarEnvioRam,
+} from "../Components/index";
+
+const SideBar = () => {
   const [state, setState] = useState(false);
 
   const {
     currentUser,
-    connectWallet
+    connectWallet,
+    crearRam,
+    conseguirTodosRam,
+    envioRamCompleto,
+    conseguirRam,
+    iniciarEnvioRam,
+    conseguirRamContador,
   } = useContext(TrackingContext);
-
+    //STATE VARIABLE
+    const [createRamModel, setCreateRamModel] = useState(false);
+    const [openProfile, setOpenProfile] = useState(false);
+    const [startModal, setStartModal] = useState(false);
+    const [completeModal, setCompleteModal] = useState(false);
+    const [getModel, setGetModel] = useState(false);
   //routing de next
   const router = useRouter();
   const path = router.pathname;
@@ -76,6 +97,12 @@ const SideBar = (setOpenProfile) => {
         </button>
 
       </div>
+      <Profile
+        openProfile={openProfile}
+        setOpenProfile={setOpenProfile}
+        currentUser={currentUser}
+        conseguirRamContador={conseguirRamContador}
+      />
     </aside>
   );
 };

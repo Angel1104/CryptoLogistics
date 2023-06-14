@@ -44,43 +44,41 @@ const index = () => {
   return (
     <div>
     <Layout>
-      <Services
-        setCompleteModal={setCompleteModal}
-        setStartModal={setStartModal}
-        setCreateRamModel={setCreateRamModel}
-      />
-
-      <Table
-        setCreateRamModel={setCreateRamModel}
-        allRamsdata={allRamsdata}
-      />
-      <Form
-        createRamModel={createRamModel}
-        crearRam={crearRam}
-        setCreateRamModel={setCreateRamModel}
-      />
-      <Profile
-        openProfile={openProfile}
-        setOpenProfile={setOpenProfile}
-        currentUser={currentUser}
-        conseguirRamContador={conseguirRamContador}
-      />
-      <EnvioRamCompleto
-        completeModal={completeModal}
-        setCompleteModal={setCompleteModal}
-        envioRamCompleto={envioRamCompleto}
-      />
-      <ConseguirRam
-        getModel={getModel}
-        setGetModel={setGetModel}
-        conseguirRam={conseguirRam}
-      />
-      <IniciarEnvioRam
-        startModal={startModal}
-        setStartModal={setStartModal}
-        iniciarEnvioRam={iniciarEnvioRam}
-      />
-      </Layout>
+            <h1 className='text-center text-2xl text-gray-800 font-light mb-4 '>PRODUCTOS</h1>
+            <div className="flex justify-around mt-11">
+                <div>
+                    <button 
+                    onClick={()=>setGetModel(true)}
+                    className=" text-center bg-blue-500 hover:bg-blue-600 text-xl text-white px-4 py-3 ">
+                        Conseguir RAM
+                    </button>
+                </div>
+                {/* <div>
+                    <button className=" text-center bg-blue-500 hover:bg-blue-600 text-xl text-white px-4 py-3 ">
+                        Contador de RAM
+                    </button>
+                </div> */}
+            </div>
+            <div className="flex items-center justify-end mt-9">
+                <input
+                    type="text"
+                    placeholder="Buscar..."
+                    className="border border-gray-300 rounded px-4 py-2 focus:outline-none"
+                />
+                <button className="ml-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
+                    Buscar
+                </button>
+            </div>
+            <Table
+                setCreateRamModel={setCreateRamModel}
+                allRamsdata={allRamsdata}
+            />
+            <ConseguirRam
+                getModel={getModel}
+                setGetModel={setGetModel}
+                conseguirRam={conseguirRam}
+            />
+        </Layout>
     </div>
   );
 };
