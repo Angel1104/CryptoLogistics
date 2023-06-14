@@ -1,6 +1,6 @@
 import React from "react";
 
-const Table = ({ setCreateRamModel, allRamsdata }) => {
+const Table = ({ setCreateShipmentModel, allShipmentsdata}) => {
 
   const converTime = (time) => {
     const newTime = new Date(time);
@@ -13,7 +13,7 @@ const Table = ({ setCreateRamModel, allRamsdata }) => {
     return dataTime;
   };
 
-  console.log(allRamsdata);
+  console.log(allShipmentsdata);
 
 
   return (
@@ -32,35 +32,35 @@ const Table = ({ setCreateRamModel, allRamsdata }) => {
             </tr>
           </thead>
           <tbody className="text-gray-600 divide-y">
-            {allRamsdata?.map((ram, idx) => (
+            {allShipmentsdata?.map((shipment, idx) => (
               <tr key={idx}>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  {ram.sender.slice(0, 15)}...
+                  {shipment.sender.slice(0, 15)}...
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  {ram.receiver.slice(0, 15)}...
+                  {shipment.receiver.slice(0, 15)}...
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  {converTime(ram.fecha)}
+                  {converTime(shipment.pickupTime)}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  {ram.almacenamiento} GB
+                  {shipment.distance} GB
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  {ram.precio}
+                  {shipment.price}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  {ram.fechaEntrega}
+                  {shipment.deliveryTime}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  {ram.pago ? " Completed" : "Not Complete"}
+                  {shipment.isPaid ? " Completed" : "Not Complete"}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  {ram.estado == 0
-                    ? "ENSAMBLADO"
-                    : ram.estado == 1
-                    ? "EN_TRANSITO"
-                    : "ENTREGADO"}
+                  {shipment.status == 0
+                    ? "Pending"
+                    : shipment.status == 1
+                    ? "IN_TRANSIT"
+                    : "Delivered"}
                 </td>
               </tr>
             ))}

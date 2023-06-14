@@ -6,38 +6,38 @@ import {
   Form,
   Services,
   Profile,
-  EnvioRamCompleto,
-  ConseguirRam,
-  IniciarEnvioRam,
+  CompleteShipment,
+  GetShipment,
+  StartShipment,
 } from "../Components/index";
 import { TrackingContext } from "../Conetxt/TrackingContext";
 
 const index = () => {
-  const {
-    currentUser,
-    crearRam,
-    conseguirTodosRam,
-    envioRamCompleto,
-    conseguirRam,
-    iniciarEnvioRam,
-    conseguirRamContador,
-  } = useContext(TrackingContext);
+    const {
+      currentUser,
+      createShipment,
+      getAllShipment,
+      completeShipment,
+      getShipment,
+      startShipment,
+      getShipmentsCount,
+    } = useContext(TrackingContext);
 
   //STATE VARIABLE
-  const [createRamModel, setCreateRamModel] = useState(false);
+  const [createShipmentModel, setCreateShipmentModel] = useState(false);
   const [openProfile, setOpenProfile] = useState(false);
   const [startModal, setStartModal] = useState(false);
   const [completeModal, setCompleteModal] = useState(false);
   const [getModel, setGetModel] = useState(false);
   //DATA STATE VARIABLE
-  const [allRamsdata, setallRamsdata] = useState();
+  const [allShipmentsdata, setallShipmentsdata] = useState();
 
   useEffect(() => {
-    const getCampaignsData = conseguirTodosRam();
+    const getCampaignsData = getAllShipment();
 
     return async () => {
       const allData = await getCampaignsData;
-      setallRamsdata(allData);
+      setallShipmentsdata(allData);
     };
   }, []);
 
@@ -70,13 +70,13 @@ const index = () => {
                 </button>
             </div>
             <Table
-                setCreateRamModel={setCreateRamModel}
-                allRamsdata={allRamsdata}
+                setCreateShipmentModel={setCreateShipmentModel}
+                allShipmentsdata={allShipmentsdata}
             />
-            <ConseguirRam
-                getModel={getModel}
-                setGetModel={setGetModel}
-                conseguirRam={conseguirRam}
+            <GetShipment
+              getModel={getModel}
+              setGetModel={setGetModel}
+              getShipment={getShipment}
             />
         </Layout>
     </div>

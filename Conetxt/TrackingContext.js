@@ -14,13 +14,13 @@ const fetchContract = (signerOrProvider) =>
 export const TrackingContext = React.createContext();
 
 export const TrackingProvider = ({ children }) => {
-//STATE VARIABLE
-const DappName = "Product Tracking RAM";
-const [currentUser, setCurrentUser] = useState("");
+  //STATE VARIABLE
+  const DappName = "Product Tracking Dapp";
+  const [currentUser, setCurrentUser] = useState("");
 
-const crearRam = async (items) => {
+  const createShipment = async (items) => {
     console.log(items);
-    const { receiver, fecha, almacenamiento, precio } = items;
+    const { receiver, pickupTime, distance, price } = items;
 
     try {
       const web3Modal = new Web3Modal();
@@ -28,53 +28,47 @@ const crearRam = async (items) => {
       const provider = new ethers.providers.Web3Provider(connection);
       const signer = provider.getSigner();
       const contract = fetchContract(signer);
-      const createItem = await contract.crearRam(
+      const createItem = await contract.createShipment(
         receiver,
-        new Date(fecha).getTime(),
-        almacenamiento,
-        ethers.utils.parseUnits(precio, 18),
+        new Date(pickupTime).getTime(),
+        distance,
+        ethers.utils.parseUnits(price, 18),
         {
-          value: ethers.utils.parseUnits(precio, 18),
+          value: ethers.utils.parseUnits(price, 18),
         }
       );
-      console.log("se creo todo normal")
       await createItem.wait();
       console.log(createItem);
       location.reload();
-      
     } catch (error) {
-      console.log("Algo anda mal", error);
+      console.log("Some want wrong", error);
     }
   };
 
-const conseguirTodosRam = async () => {
+  const getAllShipment = async () => {
     try {
       const provider = new ethers.providers.JsonRpcProvider();
       const contract = fetchContract(provider);
 
-      console.log("aca");
-      const rams = await contract.getAllTransaccions();
-      console.log("aca");
-
-      const todasRams = rams.map((ram) => ({
-        sender: ram.sender,
-        receiver: ram.receiver,
-        precio: ethers.utils.formatEther(ram.precio.toString()),
-        fecha: ram.fecha.toNumber(),
-        fechaEntrega: ram.fechaEntrega.toNumber(),
-        almacenamiento: ram.almacenamiento.toNumber(),
-        pagado: ram.pagado,
-        estado: ram.estado,
+      const shipments = await contract.getAllTransactions();
+      const allShipments = shipments.map((shipment) => ({
+        sender: shipment.sender,
+        receiver: shipment.receiver,
+        price: ethers.utils.formatEther(shipment.price.toString()),
+        pickupTime: shipment.pickupTime.toNumber(),
+        deliveryTime: shipment.deliveryTime.toNumber(),
+        distance: shipment.distance.toNumber(),
+        isPaid: shipment.isPaid,
+        status: shipment.status,
       }));
-      
-      return todasRams;
-      
-    } catch (error) {
-      console.log("error, consuguiendo las ram");
-    }
-};
 
-const conseguirRamContador = async () => {
+      return allShipments;
+    } catch (error) {
+      console.log("error want, getting shipment");
+    }
+  };
+
+  const getShipmentsCount = async () => {
     try {
       if (!window.ethereum) return "Install MetaMask";
 
@@ -83,18 +77,17 @@ const conseguirRamContador = async () => {
       });
       const provider = new ethers.providers.JsonRpcProvider();
       const contract = fetchContract(provider);
-      const ramsContadas = await contract.conseguirRamContador(accounts[0]);
-      return ramsContadas.toNumber();
+      const shipmentsCount = await contract.getShipmentsCount(accounts[0]);
+      return shipmentsCount.toNumber();
     } catch (error) {
-      console.log("error, consiguiendo contador de rams");
+      console.log("error want, getting shipment");
     }
   };
 
+  const completeShipment = async (completeShip) => {
+    console.log(completeShip);
 
-const envioRamCompleto = async (envioRamCompleto) => {
-    console.log(envioRamCompleto);
-
-    const { recevier, index } = envioRamCompleto;
+    const { recevier, index } = completeShip;
     try {
       if (!window.ethereum) return "Install MetaMask";
 
@@ -107,7 +100,7 @@ const envioRamCompleto = async (envioRamCompleto) => {
       const signer = provider.getSigner();
       const contract = fetchContract(signer);
 
-      const transaction = await contract.envioRamCompleto(
+      const transaction = await contract.completeShipment(
         accounts[0],
         recevier,
         index,
@@ -120,43 +113,41 @@ const envioRamCompleto = async (envioRamCompleto) => {
       console.log(transaction);
       location.reload();
     } catch (error) {
-      console.log("wrong envio Ram Completo", error);
+      console.log("wrong completeShipment", error);
     }
   };
 
-const conseguirRam = async (index) => {
+  const getShipment = async (index) => {
     console.log(index * 1);
     try {
-      console.log("aca")
       if (!window.ethereum) return "Install MetaMask";
 
       const accounts = await window.ethereum.request({
         method: "eth_accounts",
       });
+
       const provider = new ethers.providers.JsonRpcProvider();
       const contract = fetchContract(provider);
-      console.log(contract)
-      const ram = await contract.conseguirRam(accounts[0], index * 1);
-      
-      console.log("aca2")
-      const SoloRam = {
-        sender: ram[0],
-        receiver: ram[1],
-        fecha: ram[2].toNumber(),
-        fechaEntrega: ram[3].toNumber(),
-        almacenamiento: ram[4].toNumber(),
-        precio: ethers.utils.formatEther(ram[5].toString()),
-        estado: ram[6],
-        pagado: ram[7],
+      const shipment = await contract.getShipment(accounts[0], index * 1);
+
+      const SingleShiplent = {
+        sender: shipment[0],
+        receiver: shipment[1],
+        pickupTime: shipment[2].toNumber(),
+        deliveryTime: shipment[3].toNumber(),
+        distance: shipment[4].toNumber(),
+        price: ethers.utils.formatEther(shipment[5].toString()),
+        status: shipment[6],
+        isPaid: shipment[7],
       };
-      
-      return SoloRam;
+
+      return SingleShiplent;
     } catch (error) {
-      console.log("no hay ram");
+      console.log("Sorry no chipment");
     }
   };
 
-const iniciarEnvioRam = async (getProduct) => {
+  const startShipment = async (getProduct) => {
     const { reveiver, index } = getProduct;
 
     try {
@@ -171,7 +162,7 @@ const iniciarEnvioRam = async (getProduct) => {
       const provider = new ethers.providers.Web3Provider(connection);
       const signer = provider.getSigner();
       const contract = fetchContract(signer);
-      const ram = await contract.iniciarEnvioRam(
+      const shipment = await contract.startShipment(
         accounts[0],
         reveiver,
         index * 1,
@@ -180,16 +171,16 @@ const iniciarEnvioRam = async (getProduct) => {
         }
       );
 
-      ram.wait();
-      console.log(ram);
+      shipment.wait();
+      console.log(shipment);
       location.reload();
     } catch (error) {
-      console.log("no hay ram", error);
+      console.log("Sorry no chipment", error);
     }
   };
-
-//---CHECK WALLET CONNECTED
-const checkIfWalletConnected = async () => {
+  
+  //---CHECK WALLET CONNECTED
+  const checkIfWalletConnected = async () => {
     try {
       if (!window.ethereum) return "Install MetaMask";
 
@@ -208,7 +199,7 @@ const checkIfWalletConnected = async () => {
   };
 
   //---CONNET WALLET FUNCTION
-const connectWallet = async () => {
+  const connectWallet = async () => {
     try {
       if (!window.ethereum) return "Install MetaMask";
 
@@ -230,12 +221,12 @@ const connectWallet = async () => {
     <TrackingContext.Provider
       value={{
         connectWallet,
-        crearRam,
-        conseguirTodosRam,
-        envioRamCompleto,
-        conseguirRam,
-        iniciarEnvioRam,
-        conseguirRamContador,
+        createShipment,
+        getAllShipment,
+        completeShipment,
+        getShipment,
+        startShipment,
+        getShipmentsCount,
         DappName,
         currentUser,
       }}

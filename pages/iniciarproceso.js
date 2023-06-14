@@ -6,9 +6,9 @@ import {
     Form,
     Services,
     Profile,
-    EnvioRamCompleto,
-    ConseguirRam,
-    IniciarEnvioRam,
+    CompleteShipment,
+    GetShipment,
+    StartShipment,
   } from "../Components/index";
 import { TrackingContext } from "../Conetxt/TrackingContext";
 
@@ -16,32 +16,31 @@ const IniciarProceso = () => {
 
     const {
         currentUser,
-        crearRam,
-        conseguirTodosRam,
-        envioRamCompleto,
-        conseguirRam,
-        iniciarEnvioRam,
-        conseguirRamContador,
+        createShipment,
+        getAllShipment,
+        completeShipment,
+        getShipment,
+        startShipment,
+        getShipmentsCount,
       } = useContext(TrackingContext);
 
     //STATE VARIABLE
-    const [createRamModel, setCreateRamModel] = useState(false);
-    const [openProfile, setOpenProfile] = useState(false);
-    const [startModal, setStartModal] = useState(false);
-    const [completeModal, setCompleteModal] = useState(false);
-    const [getModel, setGetModel] = useState(false);
-    
-    //DATA STATE VARIABLE
-    const [allRamsdata, setallRamsdata] = useState();
+  const [createShipmentModel, setCreateShipmentModel] = useState(false);
+  const [openProfile, setOpenProfile] = useState(false);
+  const [startModal, setStartModal] = useState(false);
+  const [completeModal, setCompleteModal] = useState(false);
+  const [getModel, setGetModel] = useState(false);
+  //DATA STATE VARIABLE
+  const [allShipmentsdata, setallShipmentsdata] = useState();
 
-    useEffect(() => {
-        const getCampaignsData = conseguirTodosRam();
+  useEffect(() => {
+    const getCampaignsData = getAllShipment();
 
-        return async () => {
-        const allData = await getCampaignsData;
-        setallRamsdata(allData);
-        };
-    }, []);
+    return async () => {
+      const allData = await getCampaignsData;
+      setallShipmentsdata(allData);
+    };
+  }, []);
 
 
     return ( 
@@ -50,34 +49,34 @@ const IniciarProceso = () => {
         <Services
         setCompleteModal={setCompleteModal}
         setStartModal={setStartModal}
-        setCreateRamModel={setCreateRamModel}
+        setCreateShipmentModel={setCreateShipmentModel}
         />
         <Form
-            createRamModel={createRamModel}
-            crearRam={crearRam}
-            setCreateRamModel={setCreateRamModel}
+            createShipmentModel={createShipmentModel}
+            createShipment={createShipment}
+            setCreateShipmentModel={setCreateShipmentModel}
         />
         
-        <EnvioRamCompleto
-            completeModal={completeModal}
-            setCompleteModal={setCompleteModal}
-            envioRamCompleto={envioRamCompleto}
-        />
-        <ConseguirRam
-            getModel={getModel}
-            setGetModel={setGetModel}
-            conseguirRam={conseguirRam}
-        />
-        <IniciarEnvioRam
-            startModal={startModal}
-            setStartModal={setStartModal}
-            iniciarEnvioRam={iniciarEnvioRam}
-        />
+        <CompleteShipment
+        completeModal={completeModal}
+        setCompleteModal={setCompleteModal}
+        completeShipment={completeShipment}
+      />
+        <GetShipment
+        getModel={getModel}
+        setGetModel={setGetModel}
+        getShipment={getShipment}
+      />
+        <StartShipment
+        startModal={startModal}
+        setStartModal={setStartModal}
+        startShipment={startShipment}
+      />
         <Profile
         openProfile={openProfile}
         setOpenProfile={setOpenProfile}
         currentUser={currentUser}
-        conseguirRamContador={conseguirRamContador}
+        getShipmentsCount={getShipmentsCount}
       />
     </Layout>
     );

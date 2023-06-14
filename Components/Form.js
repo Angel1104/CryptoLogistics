@@ -1,38 +1,36 @@
-import React,{ useState } from "react";
+import { useState } from "react";
 
-const Form = ({
-  setCreateRamModel,
-  createRamModel,
-  crearRam,
+export default ({
+  setCreateShipmentModel,
+  createShipmentModel,
+  createShipment,
 }) => {
-
-  const [ram, setRam]=useState({
-    receiver:"",
-    fecha:"",
-    almacenamiento:"",
-    precio:"",
+  const [shipment, setShipment] = useState({
+    receiver: "",
+    pickupTime: "",
+    distance: "",
+    price: "",
   });
 
   const createItem = async () => {
     try {
-      await crearRam(ram);
+      await createShipment(shipment);
     } catch (error) {
-      console.log("error creando ram");
+      console.log("Wrong creating item");
     }
   };
-
-  return createRamModel ? (
+  return createShipmentModel ? (
     <div className="fixed inset-0 z-10 overflow-y-auto">
       <div
         className="fixed inset-0 w-full h-full bg-black opacity-40"
-        onClick={() => setCreateRamModel(false)}
+        onClick={() => setCreateShipmentModel(false)}
       ></div>
       <div className="flex items-center min-h-screen px-4 py-8">
         <div className="relative w-full max-w-lg p-4 mx-auto bg-white rounded-md shadow-lg">
           <div className="flex justify-end">
             <button
               className="p-2 text-gray-400 rounded-md hover:bg-gray-100"
-              onClick={() => setCreateRamModel(false)}
+              onClick={() => setCreateShipmentModel(false)}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -53,7 +51,7 @@ const Form = ({
               Crear RAM
             </h4>
             <p className="text-[15px] text-gray-600">
-              Ingrese los datos revisandolos.
+              Ingrese los datos revisandolos detalladamente
             </p>
             <form onSubmit={(e) => e.preventDefault()}>
               <div className="relative mt-3">
@@ -62,8 +60,8 @@ const Form = ({
                   placeholder="receiver"
                   className="w-full pl-5 pr-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
                   onChange={(e) =>
-                    setRam({
-                      ...ram,
+                    setShipment({
+                      ...shipment,
                       receiver: e.target.value,
                     })
                   }
@@ -72,12 +70,12 @@ const Form = ({
               <div className="relative mt-3">
                 <input
                   type="date"
-                  placeholder="pickupTime"
+                  placeholder="fecha"
                   className="w-full pl-5 pr-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
                   onChange={(e) =>
-                    setRam({
-                      ...ram,
-                      fecha: e.target.value,
+                    setShipment({
+                      ...shipment,
+                      pickupTime: e.target.value,
                     })
                   }
                 />
@@ -85,12 +83,12 @@ const Form = ({
               <div className="relative mt-3">
                 <input
                   type="text"
-                  placeholder="almacenamiento de la RAM"
+                  placeholder="almacenamiento"
                   className="w-full pl-5 pr-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
                   onChange={(e) =>
-                    setRam({
-                      ...ram,
-                      almacenamiento: e.target.value,
+                    setShipment({
+                      ...shipment,
+                      distance: e.target.value,
                     })
                   }
                 />
@@ -101,9 +99,9 @@ const Form = ({
                   placeholder="precio"
                   className="w-full pl-5 pr-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
                   onChange={(e) =>
-                    setRam({
-                      ...ram,
-                      precio: e.target.value,
+                    setShipment({
+                      ...shipment,
+                      price: e.target.value,
                     })
                   }
                 />
@@ -124,5 +122,3 @@ const Form = ({
     ""
   );
 };
-
-export default Form;

@@ -1,45 +1,26 @@
 import React from "react";
 import { useEffect, useState, useContext } from "react";
 import { TrackingContext } from "../Conetxt/TrackingContext";
-import Head from 'next/head';
 import {useRouter} from 'next/router';
 import Link from 'next/link';
 
-import {
-  Table,
-  Form,
-  Services,
-  Profile,
-  EnvioRamCompleto,
-  ConseguirRam,
-  IniciarEnvioRam,
-} from "../Components/index";
+import {Profile} from "../Components/index";
 
 const SideBar = () => {
-  const [state, setState] = useState(false);
 
   const {
     currentUser,
     connectWallet,
-    crearRam,
-    conseguirTodosRam,
-    envioRamCompleto,
-    conseguirRam,
-    iniciarEnvioRam,
-    conseguirRamContador,
+    getShipmentsCount,
   } = useContext(TrackingContext);
     //STATE VARIABLE
-    const [createRamModel, setCreateRamModel] = useState(false);
     const [openProfile, setOpenProfile] = useState(false);
-    const [startModal, setStartModal] = useState(false);
-    const [completeModal, setCompleteModal] = useState(false);
-    const [getModel, setGetModel] = useState(false);
   //routing de next
   const router = useRouter();
   const path = router.pathname;
   const home = () => {
     var resh;
-    if ( path === "/" || path === "/tablarams") {
+    if ( path === "/") {
         resh = true
     } else {
         resh = false
@@ -101,7 +82,7 @@ const SideBar = () => {
         openProfile={openProfile}
         setOpenProfile={setOpenProfile}
         currentUser={currentUser}
-        conseguirRamContador={conseguirRamContador}
+        getShipmentsCount={getShipmentsCount}
       />
     </aside>
   );
